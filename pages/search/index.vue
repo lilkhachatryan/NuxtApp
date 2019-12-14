@@ -1,5 +1,5 @@
 <template>
-    <div class="about-us">
+    <div>
         <div class="top-space">
 
         </div>

@@ -135,9 +135,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 export default {
     components: {
     },
-    data() {
+    data:() => {
         return {
             categorySelect: 'default',
+            text: '',
         }
   },
     computed: {
