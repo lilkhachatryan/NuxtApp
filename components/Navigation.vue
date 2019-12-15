@@ -143,10 +143,14 @@
             <b-nav-item href="#">Health & Lifestyle</b-nav-item>
 
             <b-nav-form class="nav-search">
-              <b-button :variant="isSearchActive ? 'success' : ''" class="text-sm" @click="isSearchActive = !isSearchActive">
+              <b-button 
+                :variant="isSearchActive ? 'success' : ''" class="text-sm" 
+                @click="toSearch">
                   <fa :icon="fas.faSearch"/>
               </b-button>
-              <b-form-input v-model="text" :class="{'active': isSearchActive}" placeholder="Enter keyword..."></b-form-input>
+              <b-form-input v-model="text" 
+                :class="{'active': isSearchActive}" 
+                placeholder="Enter keyword..." ></b-form-input>
             </b-nav-form>
 
             <b-nav-item href="tel:1300163402" class="nav-item--phone">
@@ -181,5 +185,17 @@ export default {
       text: '',
     }
   },
+  methods: {
+    toSearch() {
+      if(!this.isSearchActive) {
+        this.isSearchActive = !this.isSearchActive;
+        return
+      }
+
+      this.isSearchActive = !this.isSearchActive;
+      this.$router.push({name: 'search', query: {s: this.text}});
+      this.text = '';
+    },
+  }
 }
 </script>

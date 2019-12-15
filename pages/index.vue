@@ -1,10 +1,8 @@
 <template>
   <div class="homepage">
-    <client-only>
-
     <header class="header">
         <b-container class="text-center">
-          <h1 class="header__title">{{title}}</h1>
+          <h1 class="header__title">{{getSectionTitle(0)}}</h1>
           <b-row>
             <b-col md="12">
               <b-form class="row header__form">
@@ -50,10 +48,10 @@
               indicators
               fade
             >
-              <b-carousel-slide>
+              <!-- <b-carousel-slide  v-for="(slide, index) in this.sections[0].hero_slides" :key="index + 's_3'">
                 <b-row class="justify-content-around flex-md-row flex-column-reverse">
-                  <b-col md="5">
-                    <img class="img w-100 d-block" src="../assets/img/adbf96a.png" alt="" height="290">
+                  <b-col md="12">
+                    <img class="img w-100 d-block" :src="carouselImg(slide)" alt="" height="290">
                   </b-col>
                   <b-col md="7">
                     <div class="home-carousel__content">
@@ -63,35 +61,11 @@
                     </div>
                   </b-col>
                 </b-row>
-              </b-carousel-slide>
-              <b-carousel-slide>
-                <b-row class="justify-content-around flex-md-row flex-column-reverse">
-                  <b-col md="5">
-                    <img class="img w-100 d-block" src="../assets/img/fd04472.png" alt="" height="290">
-                  </b-col>
-                  <b-col md="7">
-                    <div class="home-carousel__content">
-                      <h2>7 Years Strong!</h2>
-                      <p class="text-muted">Word of Mouth winner 7 years in a row for customer service. Read open and honest feedback from the people who know us best.</p>
-                      <a href="" class="btn btn-default btn-lg btn-success">Customer Reviews <fa :icon="fas.faLongArrowAltRight"/></a>
-                    </div>
-                  </b-col>
-                </b-row>
-              </b-carousel-slide>
-              <b-carousel-slide>
-                <b-row class="justify-content-around flex-md-row flex-column-reverse">
-                  <b-col md="5">
-                    <img class="img w-100 d-block" src="../assets/img/268289b.png" alt="" height="290">
-                  </b-col>
-                  <b-col md="7">
-                    <div class="home-carousel__content">
-                      <h2>Rate Rise Hub</h2>
-                      <p class="text-muted">If your premiums increased or your cover decreased, our 2019 Rate Rise hub was designed for you.</p>
-                      <a href="" class="btn btn-default btn-lg btn-success">visit hub <fa :icon="fas.faLongArrowAltRight"/></a>
-                    </div>
-                  </b-col>
-                </b-row>
-              </b-carousel-slide>
+              </b-carousel-slide> -->
+              <hero-slide v-for="(slide, index) in this.sections[0].hero_slides" 
+                        :key="index + 's_1'" 
+                        :slide="slide"
+                        :index="index"/>
             </b-carousel>
           </b-col>
         </b-row>
@@ -100,37 +74,14 @@
     <section class="section bg-white">
       <b-container>
         <div class="section-header text-center">
-          <h2 class="title-color">How We Help You Compare Health Insurance</h2>
+          <h2 class="title-color">{{getSectionTitle(1)}}</h2>
         </div>
         <b-row>
-          <b-col md="6" lg="3" class="mb-lg-0 mb-4">
-            <a href="" class="services-card d-block h-100 text-center">
-              <img src="../assets/img/s-icon-1.jpg" alt="services icon" width="123" height="79">
-              <h4>Enter A Few Details</h4>
-              <p class="m-0 text-sm text-muted">We ask for a few details so we can better understand your individual needs. With this information, we can offer you the most suitable policies.</p>
-            </a>
-          </b-col>
-          <b-col md="6" lg="3" class="mb-lg-0 mb-4">
-            <a href="" class="services-card d-block h-100 text-center">
-              <img src="../assets/img/s-icon-2.jpg" alt="services icon" width="123" height="79">
-              <h4>Choose Cover Options</h4>
-              <p class="m-0 text-sm text-muted">Let us know what type of cover you’re after, and we’ll search for policies tailored to those preferences.</p>
-            </a>
-          </b-col>
-          <b-col md="6" lg="3" class="mb-md-0 mb-4">
-            <a href="" class="services-card d-block h-100 text-center">
-              <img src="../assets/img/s-icon-3.jpg" alt="services icon" width="123" height="79">
-              <h4>Compare Policies</h4>
-              <p class="m-0 text-sm text-muted">Review your health insurance comparison, or get more advice from our team over the phone.</p>
-            </a>
-          </b-col>
-          <b-col md="6" lg="3">
-            <a href="" class="services-card d-block h-100 text-center">
-              <img src="../assets/img/s-icon-4.jpg" alt="services icon" width="123" height="79">
-              <h4>Apply Online</h4>
-              <p class="m-0 text-sm text-muted">When you’ve found the right policy, apply online in a secure environment or give us a call and we’ll set everything up for you.</p>
-            </a>
-          </b-col>
+          <service v-for="(service, index) in services" 
+                  v-bind:key="index"
+                  :img="service.icon.url || null"
+                  :title="service.title"
+                  :content="service.content"/>
         </b-row>
       </b-container>
     </section>
@@ -181,18 +132,10 @@
               <i class="fa-icon d-block mb-3 text-white">
                 <fa :icon="fas.faQuoteLeft"/>
               </i>
-              <b-carousel-slide>
-                <p class="m-0 pr-3">My family have been loyal customers to our old health insurance and decided to give Health Insurance Comparison a go! We have now switched Health Insurance and made a saving of $1000.00 and a better cover. Have put my family and friends onto Health Insurance Comparison and they are loving the savings too!! Recommend anyone to give them ago!!</p>
-                <h4 class="person"><span></span><p>Alan</p></h4>
-              </b-carousel-slide>
-              <b-carousel-slide>
-                <p class="m-0 pr-3">My family have been loyal customers to our old health insurance and decided to give Health Insurance Comparison a go! We have now switched Health Insurance and made a saving of $1000.00 and a better cover. Have put my family and friends onto Health Insurance Comparison and they are loving the savings too!! Recommend anyone to give them ago!!</p>
-                <h4 class="person"><span></span><p>Alan</p></h4>
-              </b-carousel-slide>
-              <b-carousel-slide>
-                <p class="m-0 pr-3">My family have been loyal customers to our old health insurance and decided to give Health Insurance Comparison a go! We have now switched Health Insurance and made a saving of $1000.00 and a better cover. Have put my family and friends onto Health Insurance Comparison and they are loving the savings too!! Recommend anyone to give them ago!!</p>
-                <h4 class="person"><span></span><p>Alan</p></h4>
-              </b-carousel-slide>
+              <review v-for="(slide, index) in sections[1].reviews" 
+                    :key="index + 's_2'"
+                    :content="slide.content"
+                    :author="slide.author"/>
             </b-carousel>
           </b-col>
         </b-row>
@@ -203,15 +146,15 @@
         <b-row>
           <b-col md="6">
             <div class="desc-card d-flex flex-column h-100 bg-white text-center">
-              <h2 class="title-color m-0">Compare Health Insurance Policies, Switch & Save</h2>
-              <p class="text-muted mt-4 mb-3">Health Insurance is complicated! There are literally thousands of policies out there with all kinds of different coverage levels and features. We will help you filter out the policies that don’t meet your criteria and then compare the remaining policies from our panel of Australian health insurers side by side.</p>
+              <h2 class="title-color m-0">{{getSectionTitle(2)}}</h2>
+              <p class="text-muted mt-4 mb-3">{{getContent(2)}}</p>
               <a href="" class="btn btn-default btn-lg btn-success mt-auto">Compare Quotes <fa :icon="fas.faLongArrowAltRight"/></a>
             </div>
           </b-col>
           <b-col md="6">
             <div class="desc-card d-flex flex-column h-100 bg-white text-center border-0">
-              <h2 class="title-color m-0">Avoid Paying Extra Taxes And Penalties</h2>
-              <p class="text-muted mt-4 mb-3">If you earn over $90,000 per year and don’t have an eligible private health insurance policy the government may charge you additional taxes. In some cases paying for health cover will cost you less than the tax payable for not being covered.</p>
+              <h2 class="title-color m-0">{{getSectionTitle(3)}}</h2>
+              <p class="text-muted mt-4 mb-3">{{getContent(3)}}</p>
               <a href="" class="btn btn-default btn-lg btn-success mt-auto">Compare Quotes <fa :icon="fas.faLongArrowAltRight"/></a>
             </div>
           </b-col>
@@ -223,7 +166,7 @@
         <b-row>
           <b-col sm="12" md="12" lg="6" class="mb-lg-0 mb-4">
             <div class="youtube-video">
-              <iframe width="100%" height="270" src="https://www.youtube-nocookie.com/embed/0nB8TeWo3jg?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="100%" height="270" :src="sections[4].video_embed_url" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
           </b-col>
           <b-col sm="12" md="6" lg="3" class="mb-md-0 mb-4">
@@ -252,8 +195,8 @@
     <section class="section bg-white">
       <b-container>
         <div class="section-header text-center">
-          <h2 class="title-color">2019 health goals? We've got your back.</h2>
-          <p class="text-muted">Browse our healthy food hacks, fitness tips, recipes and more.</p>
+          <h2 class="title-color">{{getSectionTitle(5)}}</h2>
+          <p class="text-muted">{{getSubheading(5)}}</p>
         </div>
         <b-row>
           <b-col md="4">
@@ -301,57 +244,22 @@
     <section class="section bg-light">
       <b-container>
         <div class="section-header text-center w-50 w-md-100 m-auto">
-          <h2 class="title-color">A Few Things About Health Insurance</h2>
-          <p class="text-muted">Whether you’re new to health insurance or reviewing your current policy, there are things you should keep in mind…</p>
+          <h2 class="title-color">{{getSectionTitle(6)}}</h2>
+          <p class="text-muted">{{getSubheading(6)}}</p>
         </div>
         <b-row>
-          <b-col md="4" class="mb-4">
+          <b-col md="4" class="mb-4" v-for="(benefit, index) in sections[7].benefit_tags"
+                :key="index + 'b'">
             <div class="benefits-tag text-center h-100">
               <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">No ‘Lock-In’ Style Contracts</h4>
-              <p class="text-muted m-0">Whether you pay for your policy weekly or annually, any unused premium is refundable.</p>
-            </div>
-          </b-col>
-          <b-col md="4" class="mb-4">
-            <div class="benefits-tag text-center h-100">
-              <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">Rebates Are Available</h4>
-              <p class="text-muted m-0">Depending on your income, age and number of children, the Government may subsidise your policy by as much as 33.887%.</p>
-            </div>
-          </b-col>
-          <b-col md="4" class="mb-4">
-            <div class="benefits-tag text-center h-100">
-              <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">It Can Get More Expensive</h4>
-              <p class="text-muted m-0">Are you over 30? If you haven’t had private health insurance before, the premiums you’ll pay increase by 2% a year.</p>
-            </div>
-          </b-col>
-          <b-col md="4" class="mb-4">
-            <div class="benefits-tag text-center h-100">
-              <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">30 Days Money Back</h4>
-              <p class="text-muted m-0">All policies come with a no questions asked money back ‘cooling off’ period, provided you don’t make a claim.</p>
-            </div>
-          </b-col>
-          <b-col md="4" class="mb-4">
-            <div class="benefits-tag text-center h-100">
-              <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">Cover The Gaps</h4>
-              <p class="text-muted m-0">Certain services are not covered my Medicare, such as Dental, Optical, Psychological Services and Non PBS Pharmaceuticals.</p>
-            </div>
-          </b-col>
-          <b-col md="4" class="mb-md-4 mb-0">
-            <div class="benefits-tag text-center h-100">
-              <img src="../assets/img/icon-check.png" alt="benefits icon" width="38" height="38"/>
-              <h4 class="title-color">There Are Tax Benefits</h4>
-              <p class="text-muted m-0">If you earn above a certain threshold without holding a private health insurance policy, you will be charged up to 1.5% extra in taxes.</p>
+              <h4 class="title-color">{{benefit.title}}</h4>
+              <p class="text-muted m-0">{{benefitContent(benefit.content)}}</p>
             </div>
           </b-col>
         </b-row>
       </b-container>
     </section>
-
-    </client-only>
+    
   </div>
 </template>
 
@@ -360,17 +268,37 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import axios from 'axios'
 
+import Service from '~/components/Service';
+import Review from '~/components/Review';
+import HeroSlide from '~/components/HeroSlide';
 
 export default {
   async asyncData ({ params }) {
-    let { data } = await axios.get(`https://healthinsurancecomparison.com.au/wp-json/wp/v2/pages/?slug=home-old&_embed`);
-    return { data: data[0].acf.homepage_sections }
+    try {
+      let { data } = await axios.get(`https://healthinsurancecomparison.com.au/wp-json/wp/v2/pages/?slug=home-old&_embed`);
+      
+      data = data[0].acf.homepage_sections
+      // .map((section, index) => {
+      //   console.log("section", section)
+      //   let field_name = `section_${index + 1}`;
+      //   return {
+      //     [field_name]: section,
+      //   }
+      // })
+      // console.log("data", data)
+
+      return { sections: data }
+    } catch (e) {
+      return { sections: []}
+    }
   },
   components: {
+    Service,
+    Review,
+    HeroSlide,
   },
   data: () => {
     return {
-      isSearchActive: false,
       compareSelect: 'a',
       text: '',
       slide: 1
@@ -383,20 +311,32 @@ export default {
     fab () {
         return fab
     },
-    title() {
-      return this.removeTags(this.data[0].title);
-    }
+    headerTitle() {
+      return this.removeTags(this.sections[0].title);
+    },
+    services() {
+      return this.sections[1].services;
+    },
   },
   created() {
-    console.log('data', this.data)
+    console.log('data', this.sections[7].benefit_tags)
   },
   methods: {
-    removeTags(str) {
-      if ((str===null) || (str===''))
-      return false;
-      else
-      str = str.toString();
-      return str.replace( /(<([^>]+)>)/ig, '');
+   carouselImg(slide) {
+     return slide.image.url; // .mobile_image.url
+   },
+   getSectionTitle(index) {
+     let title = this.sections[index].section_title || this.sections[index].title;
+     return this.$removeHtmltags(title);
+   },
+   getContent(index) {
+     return this.$getInnerHtml(this.sections[index].content)
+   },
+   getSubheading(index) {
+     return this.sections[index].subheading;
+   },
+   benefitContent(content) {
+     return this.$removeHtmltags(content);
    }
   }
 }

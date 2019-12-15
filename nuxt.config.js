@@ -12,7 +12,7 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.png?v=3' },
+      // { rel: 'icon', type: 'image/x-icon', href: '/favicon.png?v=3' },
       // { rel: "stylesheet", type: "text/css", href: "https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" }
     ],
     // script: [
@@ -35,6 +35,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/vue-inject.js',
+    '~/plugins/autocomplete.js',
+    { src: '~/plugins/resize', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules

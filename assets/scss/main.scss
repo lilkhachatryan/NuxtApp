@@ -291,7 +291,8 @@ a {
 
     .form-control {
       height: 60px;
-      border: 1px solid #ebebeb;
+      // border: 1px solid #ebebeb;
+      border: 0px solid #ebebeb;
       background-image: none;
       box-shadow: 0 0 5px 0 hsla(0,0%,45.1%,.25);
       color: #6c757d;
@@ -374,6 +375,13 @@ a {
             object-fit: scale-down;
             -o-object-position: center bottom;
             object-position: center bottom;
+            background: #4094a9;
+            background: -webkit-linear-gradient(left, #35869a 0%, #4094a9 100%);
+            background: -moz-linear-gradient(left, #35869a 0%, #4094a9 100%);
+            background: -o-linear-gradient(left, #35869a 0%, #4094a9 100%);
+            background: -ms-linear-gradient(left, #35869a 0%, #4094a9 100%);
+            background: linear-gradient(to right, #35869a 0%, #4094a9 100%);
+            color: white;
           }
         }
       }
@@ -403,7 +411,7 @@ a {
         width: 10px;
         height: 10px;
         border-radius: 500px;
-        background: #13708c;
+        // background: #13708c;
         opacity: .25;
         border: 0;
         outline: 0;
